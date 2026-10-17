@@ -15,9 +15,10 @@ class ShoppingApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       themeMode: .light,
-      initialRoute: AppRoutes.register,
+      initialRoute: AppRoutes.login,
       routes: {
         AppRoutes.login: (context) => LoginScreen(),
         AppRoutes.register: (context) => RegisterScreen(),
