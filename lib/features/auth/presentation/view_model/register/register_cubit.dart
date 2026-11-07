@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:shopping_app/core/network/api_result.dart';
+import 'package:shopping_app/features/auth/data/api/auth_api.dart';
 import 'package:shopping_app/features/auth/data/models/register_request_model.dart';
 import 'package:shopping_app/features/auth/data/repo/repo/auth_repo_interface.dart';
 
@@ -13,9 +14,9 @@ class RegisterCubit extends Cubit<RegisterState> {
   String? messagesuccess;
   String? messageError;
 
-  Future<void> login(RegisterRequestModel request) async {
+  Future<void> register(RegisterRequestModel request) async {
     emit(RegisterLoading());
-    final result = await repo.register(request);
+    final result = await AuthApi.register(request);
     switch (result) {
       case Success<String>():
         messagesuccess = result.data;

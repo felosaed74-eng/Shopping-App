@@ -25,8 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    email = TextEditingController();
-    password = TextEditingController();
+    email = TextEditingController(text: "felo@gmail.com");
+    password = TextEditingController(text: "Felo@123456");
     _cubit = LoginCubit(AuthRepoImp(AuthDataSourceImp()));
   }
 
@@ -45,16 +45,17 @@ class _LoginScreenState extends State<LoginScreen> {
         bloc: _cubit,
         listener: (context, state) {
           if (state is LoginLoading) {
-            AppDialog.showLoading(context);
+            AppDialogs.showLoading(context);
           }
-          Navigator.of(context, rootNavigator: true).pop();
           if (state is LoginError) {
-            //AppDialog.showError(
-            //context,
-            //_cubit.messageError ?? "Error Ftom Cubit",
-            //);
+            Navigator.of(context).pop();
+            AppDialogs.showError(
+              context,
+              _cubit.messageError ?? "Error Ftom Cubit",
+            );
           }
-          if (state is LoginScreen) {
+          if (state is LoginSuccess) {
+            Navigator.of(context).pop();
             Navigator.of(context).pushReplacementNamed(AppRoutes.appSection);
           }
         },
@@ -74,7 +75,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 hint: "Enter Your Password",
               ),
               CustomMaterialButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await _cubit.login(email.text, password.text);
+                },
                 text: "login",
                 color: AppColors.primaryOrange,
               ),
@@ -85,7 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
       floatingActionButton: AuthNavigatorWidget(
         text: "Don't have an account?",
         actionText: "Sign Up",
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed(AppRoutes.register);
+        },
       ),
     );
   }
