@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
+import 'package:shopping_app/core/widgets/producted_item_widget.dart';
 import 'package:shopping_app/features/home/data/models/catrgories_list_model.dart';
 import 'package:shopping_app/features/home/data/repo/data_source/home_data_source_imp.dart';
 import 'package:shopping_app/features/home/data/repo/repo/home_repo_imp.dart';
@@ -45,6 +46,36 @@ class _HomeScreenState extends State<HomeScreen> {
                       separatorBuilder: (context, index) =>
                           const SizedBox(width: 6),
                       itemCount: state.categoriesList.length,
+                    ),
+                  );
+                }
+                return CircularProgressIndicator();
+              },
+            ),
+
+            BlocBuilder<HomeCubit, HomeState>(
+              builder: (context, state) {
+                if (state is HPError) {
+                  return Text(state.message);
+                }
+                if (state is HPSuccess) {
+                  return Expanded(
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 18,
+                        crossAxisSpacing: 30,
+                        childAspectRatio: 163 / 288,
+                      ),
+                      itemBuilder: (context, index) => ProductedItemCard(
+                        title: "Product",
+                        discount: 10,
+                        price: 8.99,
+                        rating: 4,
+                        image: "https://static.vecteezy.com/system/resources/thumbnails/072/193/074/small_2x/professionalgraphy-gear-laid-out-neatly-on-a-dark-surface-featuring-camera-body-lenses-and-tripod-photo.jpg",
+                        onTap: () {},
+                        favoriteOnTap: Icon(Icons.favorite),
+                      ),
                     ),
                   );
                 }

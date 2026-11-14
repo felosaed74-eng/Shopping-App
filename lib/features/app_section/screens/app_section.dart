@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_app/core/constants/app_assets.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
 import 'package:shopping_app/features/account/presentation/view/account_screen.dart';
 import 'package:shopping_app/features/cart/presentation/view/cart_screen.dart';
 import 'package:shopping_app/features/favorite/presentation/view/favorite_screen.dart';
+import 'package:shopping_app/features/home/data/repo/data_source/home_data_source_imp.dart';
+import 'package:shopping_app/features/home/data/repo/repo/home_repo_imp.dart';
 import 'package:shopping_app/features/home/presentation/view/home_screen.dart';
+import 'package:shopping_app/features/home/presentation/view_model/home/home_cubit.dart';
 
 class AppSection extends StatefulWidget {
   @override
@@ -13,7 +17,12 @@ class AppSection extends StatefulWidget {
 
 class _AppSectionState extends State<AppSection> {
   List<Widget> widgetList = [
-    HomeScreen(),
+    BlocProvider(
+      create: (context) => HomeCubit(HomeRepoImp(HomeDataSourceImp()))
+        ..getAllCategories()
+        ..getAllProduct(),
+      child: HomeScreen(),
+    ),
     CartScreen(),
     FavoriteScreen(),
     AccountScreen(),
