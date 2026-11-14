@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-abstract class AppDialog {
+abstract class AppDialogs {
   static Future<void> showLoading(BuildContext context) async {
     return showDialog<void>(
       context: context,
