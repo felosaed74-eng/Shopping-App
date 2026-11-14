@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shopping_app/core/theme/app_colors.dart';
 
-class ProductedItemWidget extends StatelessWidget {
-  const ProductedItemWidget({
+class ProductedItemCard extends StatelessWidget {
+  const ProductedItemCard({
     super.key,
     required this.onTap,
     this.favoriteOnTap,

@@ -25,8 +25,6 @@ abstract class AuthApi {
 
         return Success(json["message"]);
       } else {
-        print("status code: ${response.statusCode}");
-        print("response body: ${response.body}");
         return Error("Error From Server");
       }
     } catch (e) {
